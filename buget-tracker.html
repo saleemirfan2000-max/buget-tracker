@@ -20,7 +20,7 @@
     <input id="item" type="text" placeholder="ecpence item">
     <input id="expence" type="text" placeholder="expence item price">
     <input id="add" type="text" placeholder="add money">
-    <input type="submit" onclick="sumbit()">
+    <input type="submit" onclick="submitBudget()">
 
     <div class="list">
 
@@ -55,10 +55,10 @@
 
         var prise = 0;
         var add = 0;
-        function sumbit() {
+        function submitBudget() {
             var name = document.getElementById("item").value
-            expense = Number(document.getElementById("expence").value)
-            addMoney = Number(document.getElementById("add").value)
+           let expense = Number(document.getElementById("expence").value)
+           let addMoney = Number(document.getElementById("add").value)
 
             // var total = document.getElementById("total").textContent
             // var numtotal =Number(total)
