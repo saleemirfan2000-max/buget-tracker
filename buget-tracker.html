@@ -34,15 +34,26 @@
    <!-- <p id="total" style="margin-left: 40px;">0</p> -->
     </div>
 
-    <script>
+ <script type="module">
+        // Import modular Firebase functions
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBvpxpxEViI16E83XnOzsxRNU7hmbsty-g",
-  databaseURL: "https://buget-tracker-2b3c9-default-rtdb.firebaseio.com"
-};
+        // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvpxpxEViI16E83XnOzsxRNU7hmbsty-g",
+            authDomain: "buget-tracker-2b3c9.firebaseapp.com",
+            databaseURL: "https://buget-tracker-2b3c9-default-rtdb.firebaseio.com",
+            projectId: "buget-tracker-2b3c9",
+            storageBucket: "buget-tracker-2b3c9.firebasestorage.app",
+            messagingSenderId: "360546690278",
+            appId: "1:360546690278:web:494c2db6ef687875908727",
+            measurementId: "G-PSQHH3F8WY"
+        };
 
-firebase.initializeApp(firebaseConfig);
-
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
 var total = 0;
 
@@ -63,7 +74,13 @@ function sumbit(){
     document.getElementById("price").innerHTML +="<li>"+prise+"</li>"
     document.getElementById("total").innerHTML +="<li>"+ total+"</li>"
 
-saveBudgetToFirebase(name, expense, addMoney, total);
+push(ref(database, 'budgets/'), {
+                name: name,
+                expense: expense,
+                add: addMoney,
+                total: total,
+                time: new Date().toISOString()
+            });
 
 document.getElementById("item").value="";
 document.getElementById("expence").value="";
