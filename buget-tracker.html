@@ -14,7 +14,7 @@
     <input id="item" type="text" placeholder="Expense item">
     <input id="expence" type="text" placeholder="Expense price">
     <input id="add" type="text" placeholder="Add money">
-    <input type="submit" onclick="submitBudget()">
+    <input type="submit" id="submitBtn">
 
     <div class="list">
         <ul id="list"></ul>
@@ -40,32 +40,41 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.addEventListener("click", submitBudget);
+
+
         let total = 0;
 
-        function submitBudget() {
-            const name = document.getElementById("item").value;
-            const expense = Number(document.getElementById("expence").value);
-            const addMoney = Number(document.getElementById("add").value);
 
-            total += addMoney;
-            total -= expense;
+          
 
-            document.getElementById("list").innerHTML += `<li>${name}</li>`;
-            document.getElementById("price").innerHTML += `<li>${expense}</li>`;
-            document.getElementById("total").innerHTML += `<li>${total}</li>`;
+function submitBudget() {
+    const name = document.getElementById("item").value;
+    const expense = Number(document.getElementById("expence").value);
+    const addMoney = Number(document.getElementById("add").value);
 
-            push(ref(database, 'budgets/'), {
-                name: name,
-                expense: expense,
-                add: addMoney,
-                total: total,
-                time: new Date().toISOString()
-            });
+    total += addMoney - expense;
 
-            document.getElementById("item").value = "";
-            document.getElementById("expence").value = "";
-            document.getElementById("add").value = "";
-        }
+    document.getElementById("list").innerHTML += `<li>${name}</li>`;
+    document.getElementById("price").innerHTML += `<li>${expense}</li>`;
+    document.getElementById("total").innerHTML += `<li>${total}</li>`;
+
+    push(ref(database, 'budgets/'), {
+        name: name,
+        expense: expense,
+        add: addMoney,
+        total: total,
+        time: new Date().toISOString()
+    });
+
+    document.getElementById("item").value = "";
+    document.getElementById("expence").value = "";
+    document.getElementById("add").value = "";
+}
+
+        
     </script>
 </body>
 </html>
