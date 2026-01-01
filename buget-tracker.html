@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>buget tracker</title>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-
     <style>
-        
-
-        .list{
+        .list {
 
             width: 100%;
             display: flex;
         }
     </style>
 </head>
+
 <body>
     <h1>buget traker</h1>
     <hr>
-<input id="item" type="text" placeholder="ecpence item" >
-<input id="expence" type="text" placeholder="expence item price">
-<input id="add" type="text" placeholder="add money">
-<input type="submit" onclick="sumbit()">
+    <input id="item" type="text" placeholder="ecpence item">
+    <input id="expence" type="text" placeholder="expence item price">
+    <input id="add" type="text" placeholder="add money">
+    <input type="submit" onclick="sumbit()">
 
-<div class="list">
+    <div class="list">
 
-    <ul id="list"></ul>
-    <ul id="price"></ul>
-    <ul id="total"></ul>
-   <!-- <p id="total" style="margin-left: 40px;">0</p> -->
+        <ul id="list"></ul>
+        <ul id="price"></ul>
+        <ul id="total"></ul>
+        <!-- <p id="total" style="margin-left: 40px;">0</p> -->
     </div>
 
- <script type="module">
+    <script type="module">
         // Import modular Firebase functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
         import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
@@ -55,26 +51,27 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-var total = 0;
+        var total = 0;
 
-var prise =0;
-var add= 0;
-function sumbit(){
-    var name = document.getElementById("item").value
- prise = Number(document.getElementById("expence").value)
- add = Number(document.getElementById("add").value)
+        var prise = 0;
+        var add = 0;
+        function sumbit() {
+            var name = document.getElementById("item").value
+            expense = Number(document.getElementById("expence").value)
+            addMoney = Number(document.getElementById("add").value)
 
-    // var total = document.getElementById("total").textContent
-    // var numtotal =Number(total)
+            // var total = document.getElementById("total").textContent
+            // var numtotal =Number(total)
 
-    total += add
-    total -= prise
-   
-    document.getElementById("list").innerHTML +="<li>"+name+"</li>"
-    document.getElementById("price").innerHTML +="<li>"+prise+"</li>"
-    document.getElementById("total").innerHTML +="<li>"+ total+"</li>"
+            total += addMoney
+            total -= expense
 
-push(ref(database, 'budgets/'), {
+            document.getElementById("list").innerHTML += `<li>${name}</li>`;
+            document.getElementById("price").innerHTML += `<li>${expense}</li>`;
+            document.getElementById("total").innerHTML += `<li>${total}</li>`;
+
+
+            push(ref(database, 'budgets/'), {
                 name: name,
                 expense: expense,
                 add: addMoney,
@@ -82,12 +79,13 @@ push(ref(database, 'budgets/'), {
                 time: new Date().toISOString()
             });
 
-document.getElementById("item").value="";
-document.getElementById("expence").value="";
-document.getElementById("add").value="";
+            document.getElementById("item").value = "";
+            document.getElementById("expence").value = "";
+            document.getElementById("add").value = "";
 
-}
+        }
     </script>
 
 </body>
+
 </html>
