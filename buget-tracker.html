@@ -1,41 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buget tracker</title>
+    <title>Budget Tracker</title>
     <style>
-        .list {
-
-            width: 100%;
-            display: flex;
-        }
+        .list { width: 100%; display: flex; }
     </style>
 </head>
-
 <body>
-    <h1>buget traker</h1>
+    <h1>Budget Tracker</h1>
     <hr>
-    <input id="item" type="text" placeholder="ecpence item">
-    <input id="expence" type="text" placeholder="expence item price">
-    <input id="add" type="text" placeholder="add money">
+    <input id="item" type="text" placeholder="Expense item">
+    <input id="expence" type="text" placeholder="Expense price">
+    <input id="add" type="text" placeholder="Add money">
     <input type="submit" onclick="submitBudget()">
 
     <div class="list">
-
         <ul id="list"></ul>
         <ul id="price"></ul>
         <ul id="total"></ul>
-        <!-- <p id="total" style="margin-left: 40px;">0</p> -->
     </div>
 
     <script type="module">
-        // Import modular Firebase functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
         import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
-        // Your Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyBvpxpxEViI16E83XnOzsxRNU7hmbsty-g",
             authDomain: "buget-tracker-2b3c9.firebaseapp.com",
@@ -47,29 +37,22 @@
             measurementId: "G-PSQHH3F8WY"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        var total = 0;
+        let total = 0;
 
-        var prise = 0;
-        var add = 0;
         function submitBudget() {
-            var name = document.getElementById("item").value
-           let expense = Number(document.getElementById("expence").value)
-           let addMoney = Number(document.getElementById("add").value)
+            const name = document.getElementById("item").value;
+            const expense = Number(document.getElementById("expence").value);
+            const addMoney = Number(document.getElementById("add").value);
 
-            // var total = document.getElementById("total").textContent
-            // var numtotal =Number(total)
-
-            total += addMoney
-            total -= expense
+            total += addMoney;
+            total -= expense;
 
             document.getElementById("list").innerHTML += `<li>${name}</li>`;
             document.getElementById("price").innerHTML += `<li>${expense}</li>`;
             document.getElementById("total").innerHTML += `<li>${total}</li>`;
-
 
             push(ref(database, 'budgets/'), {
                 name: name,
@@ -82,10 +65,7 @@
             document.getElementById("item").value = "";
             document.getElementById("expence").value = "";
             document.getElementById("add").value = "";
-
         }
     </script>
-
 </body>
-
 </html>
