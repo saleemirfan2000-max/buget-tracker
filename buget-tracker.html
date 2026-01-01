@@ -73,7 +73,25 @@ function submitBudget() {
     document.getElementById("expence").value = "";
     document.getElementById("add").value = "";
 }
+ const budgetsRef = ref(database, 'budgets/');
+        onValue(budgetsRef, (snapshot) => {
+            const data = snapshot.val();
 
+            // Clear current HTML
+            document.getElementById("list").innerHTML = "";
+            document.getElementById("price").innerHTML = "";
+            document.getElementById("total").innerHTML = "";
+
+            total = 0;
+
+            if(data) {
+                Object.values(data).forEach(entry => {
+                    document.getElementById("list").innerHTML += `<li>${entry.name}</li>`;
+                    document.getElementById("price").innerHTML += `<li>${entry.expense}</li>`;
+                    document.getElementById("total").innerHTML += `<li>${entry.total}</li>`;
+                    total = entry.total; // update running total
+                });
+            }
         
     </script>
 </body>
