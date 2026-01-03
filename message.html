@@ -47,21 +47,21 @@
             display: flex;
         }
         #messageSendBox input  {
-            width: 65%;
+            width: 73%;
             height: 23px;
-            border-radius: 7px;
+            border-radius: 5px;
         }
         #messageSendBox #Btn  {
-            width: 30%;
+            width: 20%;
             height: 27px;
             border-radius: 7px;
 
         }
         #messageSendBox #deleteBtn  {
-            width: 5%;
+            width: 7%;
             height: 27px;
             border-radius: 7px;
-
+            background-color: red;
         }
     </style>
 </head>
@@ -130,8 +130,15 @@
 });
 
     // Scroll to bottom
-    display.scrollTop = display.scrollHeight;
-  
+    document.getElementById("displayMsg").scrollTop = document.getElementById("displayMsg").scrollHeight;
+function deleteAll() {
+  messagesRef.remove()
+    .then(() => {
+
+      document.getElementById("displayMsg").innerHTML = "";
+    })
+
+}
 </script>
 
 </html>
