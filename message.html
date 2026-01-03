@@ -47,12 +47,18 @@
             display: flex;
         }
         #messageSendBox input  {
-            width: 70%;
+            width: 65%;
             height: 23px;
             border-radius: 7px;
         }
         #messageSendBox #Btn  {
             width: 30%;
+            height: 27px;
+            border-radius: 7px;
+
+        }
+        #messageSendBox #deleteBtn  {
+            width: 5%;
             height: 27px;
             border-radius: 7px;
 
@@ -75,6 +81,7 @@
 <div id="messageSendBox">
     <input type="text" id="message" placeholder="Enter your message here">
     <button id="Btn" onclick="sendBtn()">Send Message</button>
+    <button id="deleteBtn" onclick="deleteAll()">Delete All</button>
     </div>
     </div>
 
@@ -94,10 +101,12 @@
 
   // Send message to Firebase
   function sendBtn() {
-    const msg = document.getElementById("message").value.trim();
+    const msg = document.getElementById("message").value;
     const user = localStorage.getItem("username") || "Anonymous";
 
-    if (!msg) return;
+   if (msg === "") {
+  return;
+}
 
     messagesRef.push({
       text: msg,
@@ -108,24 +117,21 @@
     document.getElementById("message").value = "";
   }
 
-  // Receive messages on all devices
   messagesRef.on("value", snapshot => {
-    const data = snapshot.val();
-    const display = document.getElementById("displayMsg");
-    display.innerHTML = "";
+  const data = snapshot.val();
 
-    if (!data) return;
+  document.getElementById("displayMsg").innerHTML = "";
 
-    for (let key in data) {
-      const m = data[key];
-      const p = document.createElement("p");
-      p.innerHTML = `<b>${m.sender}:</b> ${m.text}`;
-      display.appendChild(p);
-    }
+  if (!data) return;
+
+  Object.values(data).forEach(m => {
+    document.getElementById("displayMsg").innerHTML += `<p><b>${m.sender}:</b> ${m.text}</p>`;
+  });
+});
 
     // Scroll to bottom
     display.scrollTop = display.scrollHeight;
-  });
+  
 </script>
 
 </html>
