@@ -28,7 +28,7 @@
             text-align: center; 
             background-color: grey;
             justify-content: center;
-           
+
         }
         #displayMsg{
             height: auto;
@@ -47,20 +47,25 @@
             display: flex;
         }
         #messageSendBox input  {
+            /* width: 65% */
             width: 73%;
             height: 23px;
+            border-radius: 7px;
             border-radius: 5px;
         }
         #messageSendBox #Btn  {
+            /* width: 30%; */
             width: 20%;
             height: 27px;
             border-radius: 7px;
 
         }
         #messageSendBox #deleteBtn  {
+            /* width: 5%; */
             width: 7%;
             height: 27px;
             border-radius: 7px;
+
             background-color: red;
         }
     </style>
@@ -123,13 +128,17 @@
   document.getElementById("displayMsg").innerHTML = "";
 
   if (!data) return;
+let currentTime = new Date();
+
+
 
   Object.values(data).forEach(m => {
-    document.getElementById("displayMsg").innerHTML += `<p><b>${m.sender}:</b> ${m.text}</p>`;
+    document.getElementById("displayMsg").innerHTML += `<p> <b>${m.sender}:</b> ${m.text} <sub>${currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</sub></p>`;
   });
 });
 
-    // Scroll to bottom
+
+  
     document.getElementById("displayMsg").scrollTop = document.getElementById("displayMsg").scrollHeight;
 function deleteAll() {
   messagesRef.remove()
@@ -141,4 +150,3 @@ function deleteAll() {
 }
 </script>
 
-</html>
